@@ -10,6 +10,8 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 // 请求的根路径
 Vue.http.options.root = 'http://www.liulongbin.top:3005'
+//定义发送请求时表单数据格式 
+Vue.http.options.emulateJSON = true
 // 格式化时间
 import moment from 'moment'
 Vue.filter('dataFromat', function(dataStr, pattern="YYYY-MM-DD HH:mm:ss"){
