@@ -1,52 +1,54 @@
 <template>
   <div class="goods-list">
-    <div class="goods-item">
-      <img src="../../images/111.jpg" />
-      <h1 class="title">woshishouji</h1>
+    <router-link
+      class="goods-item"
+      v-for="(item,i) in goodslist"
+      :key="i"
+      :to="'/home/goodsinfo/'+item.id"
+      tag="div"
+    >
+      <img :src="item.img_url" />
+      <h1 class="title">{{ item.title }}</h1>
       <div class="info">
         <p class="price">
-          <span class="now">xinjiage</span>
-          <span class="old">laojige</span>
+          <span class="now">￥{{ item.sell_price }}</span>
+          <span class="old">￥{{ item.market_price }}</span>
         </p>
         <p class="sell">
           <span>热卖中</span>
-          <span>剩60件</span>
+          <span>剩{{ item.stock_quantity }}件</span>
         </p>
       </div>
-    </div>
-    <div class="goods-item">
-      <img src="../../images/111.jpg" />
-      <h1 class="title">woshishouji</h1>
-      <div class="info">
-        <p class="price">
-          <span class="now">xinjiage</span>
-          <span class="old">laojige</span>
-        </p>
-        <p class="sell">
-          <span>热卖中</span>
-          <span>剩60件</span>
-        </p>
-      </div>
-    </div>
-    <div class="goods-item">
-      <img src="../../images/111.jpg" />
-      <h1 class="title">woshishouji</h1>
-      <div class="info">
-        <p class="price">
-          <span class="now">xinjiage</span>
-          <span class="old">laojige</span>
-        </p>
-        <p class="sell">
-          <span>热卖中</span>
-          <span>剩60件</span>
-        </p>
-      </div>
-    </div>
+    </router-link>
+    <mt-button type="danger" size="large" @click="getMore">加载更多</mt-button>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      pageindex: 1,
+      goodslist: []
+    }
+  },
+  created() {
+    this.getGoodsList()
+  },
+  methods: {
+    getGoodsList() {
+      this.$http.get('api/getgoods?pageindex=' + this.pageindex).then(res => {
+        if (res.body.status === 0) {
+          this.goodslist = this.goodslist.concat(res.body.message)
+        }
+      })
+    },
+    getMore() {
+      this.pageindex++
+      this.getGoodsList()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
