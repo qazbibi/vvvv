@@ -49,7 +49,7 @@
   "dependencies": {
     "emoji-regex": "^8.0.0",
     "findup-sync": "^4.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "vue-resource": "^1.5.1"
   }
 }
